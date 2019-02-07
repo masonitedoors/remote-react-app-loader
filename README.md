@@ -6,6 +6,16 @@
 
 Once this plugin is activated, the react app(s) defined within your site's `wp-config.php` will automatically be loaded into WordPress at the location of your choice. This allows you to keep keep your react app's build/deployment pipeline separate from your WordPress pipeline, eliminating the need add non-standard directories to the root of your WordPress install or wrap a react-app inside of a WordPress plugin.
 
+## Install
+
+Upload the plugin to your plugins directory and activate it.
+
+If using composer:
+
+```sh
+composer require masonitedoors/remote-react-app-loader
+```
+
 ## Usage
 
 Define the react app(s) within your site's **wp-config.php**. See [options](#Options) for all available options.
@@ -26,6 +36,12 @@ define( 'REACT_APPS',
     ]
 );
 ```
+
+You'll need to refresh your site's rewrite rules in the database before you will see your react apps. You can do this by simply visiting your site's permalinks settings page in the admin area.
+
+> Visiting the Permalinks screen triggers a flush of rewrite rules
+
+ [Settings → Permalinks](https://codex.wordpress.org/Settings_Permalinks_Screen#Save_Changes)
 
 ## Options
 
