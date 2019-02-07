@@ -2,9 +2,9 @@
 
 [![Build Status](https://travis-ci.org/masonitedoors/remote-react-app-loader.svg?branch=master)](https://travis-ci.org/masonitedoors/remote-react-app-loader)
 
-> Easily load react apps inside of WordPress with your theme's header & footer.
+> Easily load React apps inside of WordPress with your theme's header & footer.
 
-Once this plugin is activated, the react app(s) defined within your site's `wp-config.php` will automatically be loaded into WordPress at the location of your choice. This allows you to keep keep your react app's build/deployment pipeline separate from your WordPress pipeline, eliminating the need add non-standard directories to the root of your WordPress install or wrap a react-app inside of a WordPress plugin.
+Once this plugin is activated, the React app(s) defined within your site's **wp-config.php** will automatically be loaded into WordPress at the location of your choice. This allows you to keep your React app's build/deployment pipeline separate from your WordPress pipeline, eliminating the need to add non-standard directories to the root of your WordPress install or wrap a React-app inside of a WordPress plugin.
 
 ## Install
 
@@ -18,7 +18,7 @@ composer require masonitedoors/remote-react-app-loader
 
 ## Usage
 
-Define the react app(s) within your site's **wp-config.php**. See [options](#Options) for all available options.
+Define the React app(s) within your site's **wp-config.php**. See [options](#Options) for all available options.
 
 ```php
 define( 'REACT_APPS',
@@ -37,7 +37,7 @@ define( 'REACT_APPS',
 );
 ```
 
-You'll need to refresh your site's rewrite rules in the database before you will see your react apps. You can do this by simply visiting your site's permalinks settings page in the admin area.
+You'll need to refresh your site's rewrite rules in the database before you will see your React apps. You can do this by simply visiting your site's permalinks settings page in the admin area.
 
 > Visiting the Permalinks screen triggers a flush of rewrite rules
 
@@ -47,12 +47,12 @@ You'll need to refresh your site's rewrite rules in the database before you will
 
 | option                 | type   | description                                                                                                                  |
 | ---------------------- | ------ | ---------------------------------------------------------------------------------------------------------------------------- |
-| `slug`                 | string | The slug to tell WordPress to stop handling so react can handle routing.                                                     |
-| `base_url`             | string | The base url for the remote react app.                                                                                       |
-| `asset_manifest_url`   | string | The full url to the remote react app's asset-manifest.json.                                                                  |
+| `slug`                 | string | The slug to tell WordPress to stop handling so React can handle routing.                                                     |
+| `base_url`             | string | The base url for the remote React app.                                                                                       |
+| `asset_manifest_url`   | string | The full url to the remote React app's asset-manifest.json.                                                                  |
 | `root_id` - optional   | string | The id of the root element the app mounts to. Defaults to `root`.                                                            |
-| `scripts` - optional   | array  | The react app's script dependencies in addition to `react` & `react-dom` which are always loaded. Defalts to an empty array. |
-| `styles`    - optional | array  | The react app's style dependencies. Defalts to an empty array.                                                               |
+| `scripts` - optional   | array  | The React app's script dependencies in addition to `react` & `react-dom` which are always loaded. Defalts to an empty array. |
+| `styles`    - optional | array  | The React app's style dependencies. Defalts to an empty array.                                                               |
 
 ## Plugin Requirements
 
@@ -65,11 +65,11 @@ You'll need to refresh your site's rewrite rules in the database before you will
 
 ### Images
 
-It is up the react app to ensure that any images used are using absolute paths. It is recommended to use a digital asset management service such as [Widen](https://www.widen.com/). Any images using relative paths within the react app will be broken when the app is loaded within WordPress.
+It is up the React app to ensure that any images used are using absolute paths. It is recommended to use a digital asset management service such as [Widen](https://www.widen.com/). Any images using relative paths within the react app will be broken when the app is loaded within WordPress.
 
 ### Styles
 
-When the react app is loaded from within WordPress, there is potential for styling conflicts introduced from theme/plugin CSS. It is recommended that you scope your react app's base styles within the react app at a root component using [CSS Modules](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet).
+When the React app is loaded from within WordPress, there is potential for styling conflicts introduced from theme/plugin CSS. It is recommended that you scope your React app's base styles within the React app at a root component using [CSS Modules](https://facebook.github.io/create-react-app/docs/adding-a-css-modules-stylesheet).
 
 App.js:
 
