@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<ruleset name="Remote_React_App_Loader">
+
+  <config name="installed_paths" value="../../wp-coding-standards/wpcs,../../phpcompatibility/php-compatibility,../../automattic/phpcs-neutron-standard" />
+  <config name="testVersion" value="7.1-"/>
+
+  <file>.</file>
+  <exclude-pattern>*/vendor/*</exclude-pattern>
+
+  <arg value="sp"/>
+  <arg name="colors"/>
+  <arg name="extensions" value="php"/>
+  <arg name="parallel" value="8"/>
+
+  <rule ref="PHPCompatibility"/>
+
+  <rule ref="WordPress">
+    <exclude name="WordPress.WP.EnqueuedResourceParameters.MissingVersion" />
+    <exclude name="WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents" />
+  </rule>
+
+  <rule ref="WordPress-Extra">
+    <exclude name="WordPress.Files.FileName" />
+  </rule>
+
+  <rule ref="NeutronStandard">
+    <exclude name="NeutronStandard.Functions.LongFunction.LongFunction" />
+    <exclude name="NeutronStandard.AssignAlign.DisallowAssignAlign.Aligned" />
+    <exclude name="NeutronStandard.Functions.TypeHint.NoArgumentType" />
+    <exclude name="NeutronStandard.Functions.TypeHint.NoReturnType" />
+  </rule>
+
+  <rule ref="WordPress-Docs" />
+
+  <rule ref="WordPress.WP.DeprecatedFunctions">
+    <properties>
+      <property name="minimum_supported_version" value="4.9" />
+    </properties>
+  </rule>
+
+  <rule ref="WordPress.NamingConventions.ValidHookName">
+    <properties>
+      <property name="additionalWordDelimiters" value="-/."/>
+    </properties>
+  </rule>
+
+</ruleset>
