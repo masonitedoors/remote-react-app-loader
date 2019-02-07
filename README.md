@@ -1,8 +1,10 @@
 # Remote React App Loader
 
+[![Build Status](https://travis-ci.org/masonitedoors/remote-react-app-loader.svg?branch=master)](https://travis-ci.org/masonitedoors/remote-react-app-loader)
+
 > Easily load react apps inside of WordPress with your theme's header & footer.
 
-Once this plugin is activated, the react app(s) defined within your site's `wp-config.php` will automatically be loaded into WordPress at the defined slug. This allows you to keep keep your react app's build/deployment pipeline separate from your WordPress pipeline, eliminating the need add non-standard directories to the root of your WordPress install or wrap a react-app inside of a WordPress plugin.
+Once this plugin is activated, the react app(s) defined within your site's `wp-config.php` will automatically be loaded into WordPress at the location of your choice. This allows you to keep keep your react app's build/deployment pipeline separate from your WordPress pipeline, eliminating the need add non-standard directories to the root of your WordPress install or wrap a react-app inside of a WordPress plugin.
 
 ## Usage
 
