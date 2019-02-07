@@ -7,7 +7,7 @@
  * @wordpress-plugin
  * Plugin Name:       Remote React App Loader
  * Description:       Easily load react apps inside of WordPress with your theme's header & footer.
- * Version:           0.1.0
+ * Version:           0.1.1
  * Author:            Masonite
  * Author URI:        https://www.masonite.com/
  * License:           GPL-2.0+
