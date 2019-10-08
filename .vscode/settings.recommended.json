@@ -11,6 +11,7 @@
   "phpcbf.executablePath": "./vendor/bin/phpcbf",
   "files.exclude": {
     "**/.git*": true,
+    "**/.travis.yml": true,
     "**/.DS_Store": true,
     "**/.idea": true,
     "**/.npmrc": true,
