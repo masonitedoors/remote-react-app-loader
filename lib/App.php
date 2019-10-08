@@ -15,6 +15,13 @@ namespace Masonite\Remote_React_App_Loader;
 class App {
 
 	/**
+	 * The user role needed to access the react app.
+	 *
+	 * @var string
+	 */
+	private $role;
+
+	/**
 	 * The slug to tell WordPress to stop handling so react can handle routing.
 	 *
 	 * @var string
@@ -67,6 +74,7 @@ class App {
 	 * Initialize the class and set its properties.
 	 *
 	 * @param array $args               The class' options:
+	 *              $role               TThe user role needed to access the react app.
 	 *              $slug               The slug to tell WordPress to stop handling so react can handle routing.
 	 *              $base_url           The base url for the remote react app.
 	 *              $asset_manifest_url The full url to the remote react app's asset-manifest.json.
@@ -75,12 +83,13 @@ class App {
 	 *              $styles             The react app's style dependencies.
 	 */
 	public function __construct( array $args ) {
+		$this->role               = $args['role'];
 		$this->slug               = $args['slug'];
 		$this->base_url           = $args['base_url'];
 		$this->asset_manifest_url = $args['asset_manifest_url'];
-		$this->id                 = $args['root_id'] ?? 'root';
-		$this->scripts            = $args['scripts'] ?? [];
-		$this->styles             = $args['styles'] ?? [];
+		$this->id                 = $args['root_id'];
+		$this->scripts            = $args['scripts'];
+		$this->styles             = $args['styles'];
 		$this->app_query_var      = 'react_app_' . $this->slug;
 	}
 
@@ -132,7 +141,7 @@ class App {
 	 * This means when using a shortcode in a page, you will no longer be able to have any children page/posts permalinks.
 	 */
 	public function disable_wp_rewrite() : void {
-		\add_rewrite_rule(
+		add_rewrite_rule(
 			'^' . $this->slug . '/(.*)$',
 			'index.php?' . $this->app_query_var . '=1',
 			'top'
@@ -140,9 +149,30 @@ class App {
 	}
 
 	/**
+	 * Check if the user is allowed to view this application.
+	 *
+	 * @param string $required_role The user role needed to access the react app.
+	 */
+	public static function user_is_allowed_access( $required_role ) : bool {
+		$user = wp_get_current_user();
+
+		if ( in_array( $required_role, (array) $user->roles ) ) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
 	 * The callback for the react app shortcode.
 	 */
 	public function app_handler() : void {
+		// If access is not allowed, redirect to homepage.
+		if ( ! self::user_is_allowed_access( $this->role ) ) {
+			wp_safe_redirect( home_url() );
+			exit;
+		}
+
 		$assets_list = self::get_remote_assets( $this->asset_manifest_url );
 		$assets      = self::filter_assets_list( $assets_list );
 
@@ -177,7 +207,7 @@ class App {
 			$handle = $this->id . ( $is_runtime ? '' : '-' . \sanitize_key( basename( $asset_path ) ) );
 
 			if ( $is_js ) {
-				\wp_enqueue_script(
+				wp_enqueue_script(
 					$handle,
 					self::get_asset_uri( $this->base_url, $asset_path ),
 					$scripts,
@@ -186,7 +216,7 @@ class App {
 				);
 			} elseif ( $is_css ) {
 				$has_css = true;
-				\wp_enqueue_style(
+				wp_enqueue_style(
 					$handle,
 					self::get_asset_uri( $this->base_url, $asset_path ),
 					$this->styles,
@@ -197,13 +227,13 @@ class App {
 
 		// Ensure CSS dependencies are always loaded.
 		if ( ! $has_css ) {
-			\wp_register_style(
+			wp_register_style(
 				$this->id,
 				null,
 				$this->styles,
 				null
 			);
-			\wp_enqueue_style( $this->id );
+			wp_enqueue_style( $this->id );
 		}
 
 		if ( ! empty( $assets ) ) {
@@ -220,13 +250,13 @@ class App {
 	 * @param string $asset_manifest_url The full url to the react app's asset-manifest.json.
 	 */
 	public static function get_remote_assets( string $asset_manifest_url ) : ?array {
-		$request = \wp_remote_get( $asset_manifest_url );
+		$request = wp_remote_get( $asset_manifest_url );
 
-		if ( \is_wp_error( $request ) ) {
+		if ( is_wp_error( $request ) ) {
 			return null;
 		}
 
-		$body   = \wp_remote_retrieve_body( $request );
+		$body   = wp_remote_retrieve_body( $request );
 		$assets = json_decode( $body, true );
 
 		return $assets;
@@ -257,7 +287,7 @@ class App {
 			return $asset_path;
 		}
 
-		return \trailingslashit( $base_url ) . ltrim( $asset_path, '/' );
+		return trailingslashit( $base_url ) . ltrim( $asset_path, '/' );
 	}
 
 }

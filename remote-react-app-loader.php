@@ -17,6 +17,8 @@
 
 declare( strict_types = 1 );
 
+namespace Masonite\Remote_React_App_Loader;
+
 // If this file is called directly, abort.
 defined( 'WPINC' ) || die();
 
@@ -24,20 +26,10 @@ defined( 'WPINC' ) || die();
 require_once __DIR__ . '/inc/autoload.php';
 
 // Begin execution of the plugin.
-\add_action(
+add_action(
 	'init',
 	function () {
-		$check = new \Masonite\Remote_React_App_Loader\Requirements_Checker(
-			[
-				'title' => 'Remote React App Loader',
-				'php'   => '7.1',
-				'wp'    => '5.0',
-				'file'  => __FILE__,
-			]
-		);
-		if ( $check->passes() ) {
-			$plugin = new \Masonite\Remote_React_App_Loader\Plugin();
-			$plugin->run();
-		}
+		$plugin = new Plugin();
+		$plugin->run();
 	}
 );
